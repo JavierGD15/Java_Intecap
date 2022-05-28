@@ -62,6 +62,7 @@ public class If_else {
 		menu = men.nextInt();
 		int num1;
 		int num2;
+		
 		Scanner resultado = new Scanner(System.in);
 		
 		switch (menu) {
@@ -112,10 +113,11 @@ public class If_else {
 		
 		//si se cumple sera el primero y si no se cumple sera el segundo
 		
-		//int rep1 = 2;
-		//int rep2 =3;
+		int rep1 = 2;
+		int rep2 =3;
 		
-		//boolean result = (rep1<rep2)?true:false;
+		boolean result = (rep1<rep2)?true:(rep1==rep2)?true:false;
+
 		
 	}
 
