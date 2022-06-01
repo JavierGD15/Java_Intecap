@@ -9,10 +9,9 @@ public class ayuda {
 		
         
         
-        for (int i = 0; i < 20; i++) {
-        	int xrandom = (int) (Math.random()* 8 + 0);
-        	int yrandom = (int) (Math.random()* 2 + 6);
-        	System.out.println("Coordenada generada : "+xrandom+" , "+ yrandom);
+        for (int i = 0; i < 100; i++) {
+        	int xrandom = (int) (Math.random()* 3 + 2);
+        	System.out.println("Coordenada generada : "+xrandom);
 		}
 	}
 
