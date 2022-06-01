@@ -88,7 +88,7 @@ public class juego {
 			for (int i = 0; i < tablero.length; i++) {
 				for (int j = 0; j < tablero[i].length; j++) {
 					tablero[i][j] = "";
-					
+				
 				}
 			}
 			
@@ -99,23 +99,25 @@ public class juego {
             for (int i = 0; i < castigo1; i++) {
 				int irandom = (int) (Math.random()* 8 + 0);
 				int jrandom = (int) (Math.random()* 2 + 6);
-				tablero[irandom][jrandom] = "#";
+				tablero[jrandom][irandom] = "#";
 			}
             
             for (int i = 0; i < castigo2; i++) {
             	int irandom = (int) (Math.random()* 8 + 0);
 				int jrandom = (int) (Math.random()* (5-3+1)+3);
-				tablero[irandom][jrandom] = "#";
+				tablero[jrandom][irandom] = "#";
 			}
             
             for (int i = 0; i < castigo3; i++) {
 				int irandom = (int) (Math.random()* 8 + 0);
 				int jrandom = (int) (Math.random()* (2-0+1)+0);
-				tablero[irandom][jrandom] = "#";
+				tablero[jrandom][irandom] = "#";
 			}
             
             tablero[7][7] = "@";
             int posicion = 0;
+            
+            
             
             while (posicion<65) {
             	System.out.println("Que desea hacer ? 1 para lanzar dado, 2 para pausar");
@@ -243,6 +245,7 @@ public class juego {
 			System.out.print("Se genero el reporte");
 			break;
 		case 4:
+
 			System.exit(0);
 			break;
 
