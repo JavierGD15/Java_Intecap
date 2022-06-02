@@ -1,6 +1,7 @@
 package clase_poo_31_05;
 
 public class Objeto {
+	
 	//atributos
 	protected String marca;
 	protected String color;

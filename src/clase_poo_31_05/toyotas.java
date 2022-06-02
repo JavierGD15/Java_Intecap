@@ -4,7 +4,6 @@ package clase_poo_31_05;
 public class toyotas extends Objeto{
 	
 	//atributos
-	
 	int año;
 	int ventas_al_año;
 	
