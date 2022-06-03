@@ -5,7 +5,8 @@ public class clientes extends humano {
 	int nit;
 	String idCliente;
 	String direccion;
-	public clientes(String nombre, int edad, String genero, int dpi, int nit,  String direccion) {
+	
+	public clientes(String nombre, int edad, String genero, int dpi, int nit, String direccion) {
 		super(nombre, edad, genero, dpi);
 		this.nit = nit;
 		this.direccion = direccion;
