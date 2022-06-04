@@ -18,7 +18,7 @@ public class inicio {
 	JButton b1 = new JButton();
 
 	// metodo
-	public void frame() {
+	private void frame() {
 		inicio.setTitle("Login");
 		inicio.setLocationRelativeTo(null);
 
@@ -34,7 +34,7 @@ public class inicio {
 	}
 
 	// etiquetas y jtextfiels
-	public void etiquetas() {
+	private void etiquetas() {
 		// etiquetas
 		l1.setText("Usuario:");
 		l1.setFont(new Font("Serig", Font.PLAIN, 25));
@@ -57,7 +57,7 @@ public class inicio {
 
 	}
 
-	public void botones() {
+	private void botones() {
 		b1.setText("Ingresar");
 		b1.setBounds(200, 380, 100, 40);
 		p1.add(b1);
@@ -69,7 +69,11 @@ public class inicio {
 			public void actionPerformed(ActionEvent e) {
 
 				if (t1.getText().equals("Admin") && t2.getText().equals("Admin")) {
-					JOptionPane.showMessageDialog(null, "Usuario aceptado");
+					JOptionPane.showMessageDialog(null, "Bienvenido");
+					inicio.setVisible(false);
+					Menu_Principal mp = new Menu_Principal();
+					mp.ejecutar();
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Usuario Equivocado");
