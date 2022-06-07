@@ -17,7 +17,7 @@ public class Menu_Principal {
 	
 	Sucursales_Menu sm = new Sucursales_Menu();
 	
-	private void valores_iniciales() {
+	private void valores_iniciales() throws ClassNotFoundException {
 		
 		//Frame datos
 		principal.setTitle("Modulo Administrador");
@@ -60,12 +60,12 @@ public class Menu_Principal {
 		
 	}
 	
-	public void ejecutar() {
+	public void ejecutar() throws ClassNotFoundException {
 		valores_iniciales();
 	
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		Menu_Principal menu = new Menu_Principal();
 		menu.valores_iniciales();
 		

@@ -72,7 +72,13 @@ public class inicio {
 					JOptionPane.showMessageDialog(null, "Bienvenido");
 					inicio.setVisible(false);
 					Menu_Principal mp = new Menu_Principal();
-					mp.ejecutar();
+					
+					try {
+						mp.ejecutar();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 				}
 				else {
