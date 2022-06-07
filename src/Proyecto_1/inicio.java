@@ -76,7 +76,6 @@ public class inicio {
 					try {
 						mp.ejecutar();
 					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					

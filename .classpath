@@ -6,5 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="libreria/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libreria/gson-2.8.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
