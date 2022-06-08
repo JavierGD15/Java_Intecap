@@ -1,8 +1,13 @@
 package Proyecto_1;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.*;
+
+import com.itextpdf.text.DocumentException;
 
 public class Menu_Principal {
 	
@@ -24,7 +29,36 @@ public class Menu_Principal {
 		principal.setLocationRelativeTo(null);
 		principal.setBounds(500, 150, 900, 700);
 		principal.setVisible(true);
+		JButton cerrar = new JButton("Cerrar Sesion");
+		cerrar.setBackground(Color.red);
+		cerrar.setForeground(Color.white);
+		cerrar.setBounds(700, 630, 150, 20);	
+		
+		// Funcion cerrar
+		ActionListener funcion_cerrar = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				inicio log = new inicio ();
+				
+				log.ejecutar();
+				principal.setVisible(false);
+				
+				
+
+			}
+		};
+
+		// Acción del evento
+		cerrar.addActionListener(funcion_cerrar);
+		
+		principal.add(cerrar);
 		principal.add(pestañas);
+		
+		
+		
+
 		
 		//colores de los paneles
 		sucursales.setBackground(Color.cyan);
@@ -36,8 +70,6 @@ public class Menu_Principal {
 		clientes.setLayout(null);
 		vendedores.setLayout(null);
 		productos.setLayout(null);
-		
-		
 		
 		
 		
@@ -53,9 +85,10 @@ public class Menu_Principal {
 		sucursales.add(sm.carga);
 		sucursales.add(sm.actualizar);
 		sucursales.add(sm.eliminar);
-		sucursales.add(sm.pdf);
-		
+		sucursales.add(sm.pdf);		
 		sucursales.add(sm.sp);
+		
+
 		
 		
 	}
@@ -64,11 +97,7 @@ public class Menu_Principal {
 		valores_iniciales();
 	
 	}
-	
-	public static void main(String[] args) throws ClassNotFoundException {
-		Menu_Principal menu = new Menu_Principal();
-		menu.valores_iniciales();		
-	}
+
 	
 	
 	

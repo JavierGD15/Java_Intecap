@@ -71,6 +71,7 @@ public class inicio {
 				if (t1.getText().equals("Admin") && t2.getText().equals("Admin")) {
 					JOptionPane.showMessageDialog(null, "Bienvenido");
 					inicio.setVisible(false);
+					
 					Menu_Principal mp = new Menu_Principal();
 					
 					try {
