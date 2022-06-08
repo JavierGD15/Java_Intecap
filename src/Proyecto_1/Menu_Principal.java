@@ -67,8 +67,7 @@ public class Menu_Principal {
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 		Menu_Principal menu = new Menu_Principal();
-		menu.valores_iniciales();
-		
+		menu.valores_iniciales();		
 	}
 	
 	

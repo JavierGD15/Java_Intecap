@@ -85,8 +85,37 @@ public class Sucursales_Menu implements Serializable {
 		actualizar.setText("Actualizar");
 		actualizar.setBounds(550, 260, 130, 70);
 		
+		// Funcion actualizar
+		ActionListener funcion_actualizar = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				modificar();
+
+			}
+		};
+
+		//Acción del evento
+		actualizar.addActionListener(funcion_actualizar);
+		
+		
 		eliminar.setText("Eliminar");
 		eliminar.setBounds(730, 260, 130, 70);
+		
+		// Funcion eliminar
+		ActionListener funcion_eliminar = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				eliminar();
+
+			}
+		};
+
+		//Acción del evento
+		eliminar.addActionListener(funcion_eliminar);
 
 		pdf.setText("Exportar pdf");
 		pdf.setBounds(550, 420, 310, 70);
@@ -212,8 +241,7 @@ public class Sucursales_Menu implements Serializable {
 						sucursales[i][1] = s.nombre;
 						sucursales[i][2] = s.direccion;
 						sucursales[i][3] = s.correo;
-						sucursales[i][4] = s.telefono;
-						
+						sucursales[i][4] = s.telefono;						
 
 						// guardar
 						try {
@@ -239,7 +267,6 @@ public class Sucursales_Menu implements Serializable {
 		b1.addActionListener(ingresar);
 
 	}
-
 	
 	
     private String leerarchivo() {
@@ -335,8 +362,169 @@ public class Sucursales_Menu implements Serializable {
         }
     }
 
-    
+    private void eliminar() {
+    	int posicion = tabla.getSelectedRow();
+    	
+    	if(posicion != -1) {
+    		
+    		for (int i = posicion; i < sucursales.length; i++) {
+    			
+    			if( i == 49) {
+    				sucursales[i][0] = null;
+    				sucursales[i][1] = null;
+    				sucursales[i][2] = null;
+    				sucursales[i][3] = null;
+    				sucursales[i][4] = null;
+    			}
+    			
+    			else if(sucursales[i][0] != null) {
+    				sucursales[i][0] = sucursales[i+1][0];
+    				sucursales[i][1] = sucursales[i+1][1];
+    				sucursales[i][2] = sucursales[i+1][2];
+    				sucursales[i][3] = sucursales[i+1][3];
+    				sucursales[i][4] = sucursales[i+1][4];
+    			}
+			}
+    		
+            try {
+                ObjectOutputStream tabla = new ObjectOutputStream(new FileOutputStream("tabla_sucursales.dat"));
+                tabla.writeObject(sucursales);
+                tabla.close();
+            } catch (IOException s) {
+            }
+    		
+    		
+    	}else {
+    		 JOptionPane.showMessageDialog(null, "Debe selecionar una Fila");
+    	}
+    	
+    	tabla.clearSelection();
+    	
+    }
 	
+    private void modificar() {
+    	int seleccionar = tabla.getSelectedRow();
+    	if(seleccionar != -1) {
+    		
+    		JFrame crear = new JFrame("Modificar");
+    		JPanel p1 = new JPanel();
+    		p1.setLayout(null);
+
+    		// etiquetas
+    		JLabel l1 = new JLabel();
+    		JLabel l2 = new JLabel();
+    		JLabel l3 = new JLabel();
+    		JLabel l4 = new JLabel();
+    		JLabel l5 = new JLabel();
+
+    		// cajas de texto
+    		JTextField t1 = new JTextField();
+    		JTextField t2 = new JTextField();
+    		JTextField t3 = new JTextField();
+    		JTextField t4 = new JTextField();
+    		JTextField t5 = new JTextField();
+
+    		// Boton
+    		JButton b1 = new JButton();
+
+    		l1.setText("Codigo:");
+    		l1.setFont(new Font("Serig", Font.PLAIN, 25));
+    		l1.setBounds(50, 80, 100, 80);
+    		l1.setVisible(true);
+    		p1.add(l1);
+
+    		l2.setText("Nombre:");
+    		l2.setFont(new Font("Serig", Font.PLAIN, 25));
+    		l2.setBounds(50, 180, 180, 80);
+    		l2.setVisible(true);
+    		p1.add(l2);
+
+    		l3.setText("Direccion:");
+    		l3.setFont(new Font("Serig", Font.PLAIN, 25));
+    		l3.setBounds(50, 280, 180, 80);
+    		l3.setVisible(true);
+    		p1.add(l3);
+
+    		l4.setText("Correo:");
+    		l4.setFont(new Font("Serig", Font.PLAIN, 25));
+    		l4.setBounds(50, 380, 100, 80);
+    		l4.setVisible(true);
+    		p1.add(l4);
+
+    		l5.setText("Telefono:");
+    		l5.setFont(new Font("Serig", Font.PLAIN, 25));
+    		l5.setBounds(50, 480, 150, 80);
+    		l5.setVisible(true);
+    		p1.add(l5);
+
+    		crear.setTitle("Crear");
+    		crear.setLocationRelativeTo(null);
+    		crear.setBounds(500, 150, 600, 700);
+    		crear.setVisible(true);
+    		p1.setBackground(Color.cyan);
+    		crear.add(p1);
+    		
+
+    		//jtextfield
+    		t1.setBounds(250, 100, 200, 40);
+    		t2.setBounds(250, 200, 200, 40);
+    		t3.setBounds(250, 300, 200, 40);
+    		t4.setBounds(250, 400, 200, 40);
+    		t5.setBounds(250, 500, 200, 40);
+    		
+    		t1.setText(sucursales[seleccionar][0]+"");
+    		t2.setText(sucursales[seleccionar][1].toString());
+    		t3.setText((String)sucursales[seleccionar][2]);
+    		t4.setText(sucursales[seleccionar][3].toString());
+    		t5.setText(sucursales[seleccionar][4].toString());
+    		
+
+    		p1.add(t1);
+    		p1.add(t2);
+    		p1.add(t3);
+    		p1.add(t4);
+    		p1.add(t5);
+    		
+
+    		// boton
+    		b1.setText("Guardar");
+    		b1.setBounds(200, 570, 150, 60);
+    		p1.add(b1);
+
+    		// Funcionalidad
+    		ActionListener ingresar = new ActionListener() {
+
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				
+    				sucursal objeto = new sucursal(Integer.parseInt(t1.getText()),t2.getText(),t3.getText(),t4.getText(),Integer.parseInt(t5.getText()));
+   				
+    						sucursales[seleccionar][0] = objeto.codigo;
+    						sucursales[seleccionar][1] = objeto.nombre;
+    						sucursales[seleccionar][2] = objeto.direccion;
+    						sucursales[seleccionar][3] = objeto.correo;
+    						sucursales[seleccionar][4] = objeto.telefono;					
+
+    						//guardar
+    						try {
+    							ObjectOutputStream carga = new ObjectOutputStream(
+    									new FileOutputStream("tabla_sucursales.dat"));
+    							carga.writeObject(sucursales);
+    							carga.close();
+    						} catch (IOException j) {
+
+    						}
+    						crear.setVisible(false);
+    			}
+    		};
+
+    		// Acción del evento
+    		b1.addActionListener(ingresar);
+    	}else {
+    		JOptionPane.showMessageDialog(null, "Debe selecionar una Fila");
+    	}
+    	
+    }
 	
 	public void ejecutar() throws ClassNotFoundException {
 		botones();
