@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import javax.swing.*;
 
-public class inicio {
+public class inicio implements Serializable{
 	// atributos
 	JFrame inicio = new JFrame();
 	JPanel p1 = new JPanel();
@@ -16,6 +20,8 @@ public class inicio {
 	JTextField t1 = new JTextField();
 	JPasswordField t2 = new JPasswordField();
 	JButton b1 = new JButton();
+	Object [][] vendedores = new Object[400][6];
+	
 
 	// metodo
 	private void frame() {
@@ -67,6 +73,21 @@ public class inicio {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				// cargar archivo
+				try {
+
+					ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_vendedores.dat"));
+
+					vendedores = (Object[][]) recuperar.readObject();
+					recuperar.close();
+
+				}
+				
+				catch (IOException o) {
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
 
 				if (t1.getText().equals("Admin") && t2.getText().equals("Admin")) {
 					JOptionPane.showMessageDialog(null, "Bienvenido");
@@ -81,8 +102,23 @@ public class inicio {
 					}
 					
 				}
+				
+				
 				else {
-					JOptionPane.showMessageDialog(null, "Usuario Equivocado");
+					Boolean acceso = false;
+					for (int i = 0; i < vendedores.length; i++) {
+						if(t1.getText().equals(vendedores[i][1]) && t2.getText().equals(vendedores[i][5])) {
+							acceso = true;
+							break;
+							
+						}
+					}
+					if (acceso == true) {
+						JOptionPane.showMessageDialog(null, "Bienvenido");
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "Usuario Equivocado o no existente");
+					}
 				}
 
 			}

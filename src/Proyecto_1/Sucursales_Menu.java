@@ -92,9 +92,7 @@ public class Sucursales_Menu implements Serializable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				modificar();
-
 			}
 		};
 
@@ -130,7 +128,7 @@ public class Sucursales_Menu implements Serializable {
 				try {
 					generar_pdf();
 				} catch (FileNotFoundException | DocumentException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 
