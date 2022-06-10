@@ -39,14 +39,9 @@ public class Menu_Principal {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				inicio log = new inicio ();
-				
+				inicio log = new inicio ();				
 				log.ejecutar();
 				principal.setVisible(false);
-				
-				
-
 			}
 		};
 
@@ -55,10 +50,6 @@ public class Menu_Principal {
 		
 		principal.add(cerrar);
 		principal.add(pestañas);
-		
-		
-		
-
 		
 		//colores de los paneles
 		sucursales.setBackground(Color.cyan);
@@ -70,8 +61,6 @@ public class Menu_Principal {
 		clientes.setLayout(null);
 		vendedores.setLayout(null);
 		productos.setLayout(null);
-		
-		
 		
 		//agregamos los paneles
 		pestañas.addTab("Sucursales",sucursales);
@@ -87,9 +76,6 @@ public class Menu_Principal {
 		sucursales.add(sm.eliminar);
 		sucursales.add(sm.pdf);		
 		sucursales.add(sm.sp);
-		
-
-		
 		
 	}
 	
