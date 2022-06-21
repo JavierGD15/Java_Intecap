@@ -13,7 +13,7 @@ public class Menu_vendedores {
 	JPanel tablas = new JPanel();
 	cobros c = new cobros();
 
-	private void menu() {
+	private void menu() throws ClassNotFoundException {
 		// Frame datos
 		principal.setTitle("Modulo Administrador");
 		principal.setLocationRelativeTo(null);
@@ -56,15 +56,18 @@ public class Menu_vendedores {
 		ventas.add(c.filtro);
 		ventas.add(c.ventas);
 		
-		
 
 	}
 
-	public void ejecutar() {
+	public void ejecutar() throws ClassNotFoundException {
+		extracted();
+	}
+
+	private void extracted() throws ClassNotFoundException {
 		menu();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		Menu_vendedores mv = new Menu_vendedores();
 		mv.ejecutar();
 
