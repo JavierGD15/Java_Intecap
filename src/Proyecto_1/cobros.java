@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.*;
@@ -340,13 +341,13 @@ public class cobros {
 			filtro_nombre(t1.getText());
 			break;
 		case 2:
-			
+			correo_filtro(t2.getText());
 			break;
 		case 3:
-			
+			nit_filtro(Integer.parseInt(t3.getText()));
 			break;
 		case 4:
-			
+			genero_filtro(t4.getText());
 			break;			
 		default:
 			break;
@@ -354,7 +355,7 @@ public class cobros {
 	}
 	
 	private void filtro_nombre(String nombre) throws ClassNotFoundException {
-		
+		vaciar();
 		// cargar archivo
 		try {
 
@@ -367,16 +368,182 @@ public class cobros {
 
 		catch (IOException e) {
 		}
-		
+		boolean respuesta = false;
+		int contador =0;
 		for (int i = 0; i < clientes.length; i++) {
-			if(nombre == clientes[i][1]) {
+			if(nombre.equals(clientes[i][1])) {
 				//aplica filtro
-				System.out.println("aplica filtro");
-			}else {
-				
+				resultados[contador] = nombre;
+				contador++;				
+				respuesta = true;
 			}
 		}
 		
+		if(respuesta == true) {
+			combo_filtro.setVisible(false);
+			combo_filtro = new JComboBox(resultados);
+			combo_filtro.setBounds(250, 200, 250, 20);
+	        filtro.add(combo_filtro);
+		}else {
+				if (t2.getText().isEmpty() != false) {
+					if (t3.getText().isEmpty() != false) {
+						if (t4.getText().isEmpty() != false) {
+							JOptionPane.showMessageDialog(null, "Por favor llena un filtro");
+							
+						}else {
+							//aplicamos filtro de Genero
+							genero_filtro(t4.getText());
+						}
+					}else {
+						//aplicamos filtro de NIT
+						nit_filtro(Integer.parseInt(t3.getText()));
+					}
+				}else {
+					//aplicamos filtro de correo
+					correo_filtro(t2.getText());
+				}
+				
+			}
+			
+		}
+		
+	
+	
+	private void correo_filtro(String correo) throws ClassNotFoundException {
+		vaciar();
+		// cargar archivo
+		try {
+
+			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
+
+			clientes = (Object[][]) recuperar.readObject();
+			recuperar.close();
+
+		}
+
+		catch (IOException e) {
+		}
+		boolean respuesta = false;
+		int contador =0;
+		for (int i = 0; i < clientes.length; i++) {
+			if(correo.equals(clientes[i][3])) {
+				//aplica filtro
+				resultados[contador] = clientes[i][1]+"";
+				contador++;				
+				respuesta = true;
+			}
+		}
+		
+		if(respuesta == true) {
+			combo_filtro.setVisible(false);
+			combo_filtro = new JComboBox(resultados);
+			combo_filtro.setBounds(250, 200, 250, 20);
+	        filtro.add(combo_filtro);
+		}else {
+				
+					if (t3.getText().isEmpty() != false) {
+						if (t4.getText().isEmpty() != false) {
+							JOptionPane.showMessageDialog(null, "Por favor llena un filtro");
+							
+						}else {
+							//aplicamos filtro de Genero
+							genero_filtro(t4.getText());
+						}
+					}else {
+						//aplicamos filtro de NIT
+						nit_filtro(Integer.parseInt(t3.getText()));
+					}
+				
+			}
+	}
+	
+	private void nit_filtro(int nit) throws ClassNotFoundException {
+		vaciar();
+		
+		// cargar archivo
+				try {
+
+					ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
+
+					clientes = (Object[][]) recuperar.readObject();
+					recuperar.close();
+
+				}
+
+				catch (IOException e) {
+				}
+				boolean respuesta = false;
+				int contador =0;
+				for (int i = 0; i < clientes.length; i++) {
+					
+					if(nit == Integer.parseInt((String) clientes[i][2])) {
+						//aplica filtro
+						resultados[contador] = clientes[i][1]+"";
+						contador++;				
+						respuesta = true;
+					}
+				}
+				
+				if(respuesta == true) {
+					combo_filtro.setVisible(false);
+					combo_filtro = new JComboBox(resultados);
+					combo_filtro.setBounds(250, 200, 250, 20);
+			        filtro.add(combo_filtro);
+				}else {
+						
+							
+								if (t4.getText().isEmpty() != false) {
+									JOptionPane.showMessageDialog(null, "Datos no encontrados");
+									
+								}else {
+									//aplicamos filtro de Genero
+									genero_filtro(t4.getText());
+								}
+							
+						
+					}
+		
+	}
+	
+	private void genero_filtro(String genero) throws ClassNotFoundException {
+		vaciar();
+		// cargar archivo
+				try {
+
+					ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
+
+					clientes = (Object[][]) recuperar.readObject();
+					recuperar.close();
+
+				}
+
+				catch (IOException e) {
+				}
+				boolean respuesta = false;
+				int contador =0;
+				for (int i = 0; i < clientes.length; i++) {
+					if(genero.equals(clientes[i][4])) {
+						//aplica filtro
+						resultados[contador] = clientes[i][1]+"";
+						contador++;				
+						respuesta = true;
+					}
+				}
+				
+				if(respuesta == true) {
+					combo_filtro.setVisible(false);
+					combo_filtro = new JComboBox(resultados);
+					combo_filtro.setBounds(250, 200, 250, 20);
+			        filtro.add(combo_filtro);
+				}else {
+					JOptionPane.showMessageDialog(null, "Datos no encontrados");
+				}
+	}
+	
+	private void vaciar() {
+		for (int i = 0; i < resultados.length; i++) {
+			resultados[i]="";
+		}
 	}
 	
 	public void ejecutar() throws ClassNotFoundException {
