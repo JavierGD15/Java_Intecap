@@ -22,6 +22,12 @@ public class cobros {
 	JComboBox combo_filtro = new JComboBox(resultados);
 	Object [][] clientes = new Object [100][5];
 	
+	//cajas filtro
+    JTextField t1 = new JTextField();
+    JTextField t2 = new JTextField();
+    JTextField t3 = new JTextField();
+    JTextField t4 = new JTextField();
+	
 	private void crear() {
 		filtro.setLayout(null);
 		ventas.setLayout(null);
@@ -76,26 +82,48 @@ public class cobros {
         filtro.add(genero);
         
         
-        JTextField t1 = new JTextField();
+
         t1.setBounds(250, 25, 200, 25);
         filtro.add(t1);
         
-        JTextField t2 = new JTextField();
+        
         t2.setBounds(250, 85, 200, 25);
         filtro.add(t2);
         
-        JTextField t3 = new JTextField();
+        
         t3.setBounds(580, 25, 200, 25);
         filtro.add(t3);
         
-        JTextField t4 = new JTextField();
+        
         t4.setBounds(580, 85, 200, 25);
         filtro.add(t4);
+        
         
         
         JButton b_filtro = new JButton("Aplicar Filtro");
         b_filtro.setBounds(180, 150, 600, 30);
         filtro.add(b_filtro);
+        
+		// Funcion crear
+		ActionListener funcion_filtro = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					aplicar_filtro();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		};
+
+		// Acción del evento
+		b_filtro.addActionListener(funcion_filtro);
+        
+        
         
        
         JLabel l2 = new JLabel("Filtrados: ");
@@ -279,6 +307,77 @@ public class cobros {
 
 	}
 
+	private void aplicar_filtro() throws ClassNotFoundException {
+		
+		int x =0;
+		
+		if(t1.getText().isEmpty() != false) {
+			if (t2.getText().isEmpty() != false) {
+				if (t3.getText().isEmpty() != false) {
+					if (t4.getText().isEmpty() != false) {
+						JOptionPane.showMessageDialog(null, "Por favor llena un filtro");
+						
+					}else {
+						//aplicamos filtro de Genero
+						x = 4;
+					}
+				}else {
+					//aplicamos filtro de NIT
+					x =3;
+				}
+			}else {
+				//aplicamos filtro de correo
+				x =2;
+			}
+			
+		}else {
+			//aplicamos filtro de nombre
+			x = 1;
+		}
+		
+		switch (x) {
+		case 1:
+			filtro_nombre(t1.getText());
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;			
+		default:
+			break;
+		}
+	}
+	
+	private void filtro_nombre(String nombre) throws ClassNotFoundException {
+		
+		// cargar archivo
+		try {
+
+			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
+
+			clientes = (Object[][]) recuperar.readObject();
+			recuperar.close();
+
+		}
+
+		catch (IOException e) {
+		}
+		
+		for (int i = 0; i < clientes.length; i++) {
+			if(nombre == clientes[i][1]) {
+				//aplica filtro
+				System.out.println("aplica filtro");
+			}else {
+				
+			}
+		}
+		
+	}
 	
 	public void ejecutar() throws ClassNotFoundException {
 		crear();
