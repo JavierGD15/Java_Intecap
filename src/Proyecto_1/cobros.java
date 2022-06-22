@@ -22,6 +22,8 @@ public class cobros {
 	String [] resultados = new String[100]; 
 	JComboBox combo_filtro = new JComboBox(resultados);
 	Object [][] clientes = new Object [100][5];
+	JTable tabla_compas;
+	JScrollPane sp;
 	
 	//cajas filtro
     JTextField t1 = new JTextField();
@@ -406,8 +408,6 @@ public class cobros {
 			}
 			
 		}
-		
-	
 	
 	private void correo_filtro(String correo) throws ClassNotFoundException {
 		vaciar();
@@ -476,7 +476,7 @@ public class cobros {
 				int contador =0;
 				for (int i = 0; i < clientes.length; i++) {
 					
-					if(nit == Integer.parseInt((String) clientes[i][2])) {
+					if((nit+"").equals(clientes[i][2]+"")) {
 						//aplica filtro
 						resultados[contador] = clientes[i][1]+"";
 						contador++;				
@@ -490,17 +490,13 @@ public class cobros {
 					combo_filtro.setBounds(250, 200, 250, 20);
 			        filtro.add(combo_filtro);
 				}else {
-						
-							
-								if (t4.getText().isEmpty() != false) {
-									JOptionPane.showMessageDialog(null, "Datos no encontrados");
+						if (t4.getText().isEmpty() != false) {
+							JOptionPane.showMessageDialog(null, "Datos no encontrados");
 									
-								}else {
-									//aplicamos filtro de Genero
-									genero_filtro(t4.getText());
-								}
-							
-						
+						}else {
+							//aplicamos filtro de Genero
+							genero_filtro(t4.getText());
+						}
 					}
 		
 	}
@@ -540,14 +536,68 @@ public class cobros {
 				}
 	}
 	
+	
+	private void modulo_ventas() {
+		
+		JLabel l1_fecha = new JLabel("Fecha");
+		l1_fecha.setBounds(400, 5, 50, 30);
+		ventas.add(l1_fecha);
+		
+		JLabel l1_ayuda = new JLabel();
+		l1_ayuda.setBounds(480, 5, 100, 30);
+		ventas.add(l1_ayuda);
+		
+		JLabel l2_factura = new JLabel("No.");
+		l2_factura.setBounds(700, 5, 50, 30);
+		ventas.add(l2_factura);
+		
+		JLabel l2_ayuda = new JLabel(); 
+		l2_ayuda.setBounds(780, 5, 50, 30);
+		ventas.add(l2_ayuda);
+		
+		JLabel l3_codigo = new JLabel("Codigo");
+		l3_codigo.setBounds(100, 50, 50, 30);
+		ventas.add(l3_codigo);
+		
+		JLabel l4_cantidad = new JLabel("Cantidad");
+		JLabel l5_total = new JLabel("Total");
+		
+		JTextField t1_codigo = new JTextField();
+		t1_codigo.setBounds(180, 50, 180, 30);
+		ventas.add(t1_codigo);
+		
+		JTextField t2_cantidad = new JTextField();
+		
+		
+		JTextField t3_total = new JTextField();
+		
+		
+		
+		JButton agregar = new JButton();
+		JButton vender = new JButton();
+		
+		tabla_compas = new JTable();
+		sp = new JScrollPane(tabla_compas);
+		
+		
+		
+		
+	}
+	
+	
+	
 	private void vaciar() {
 		for (int i = 0; i < resultados.length; i++) {
 			resultados[i]="";
 		}
 	}
 	
+	
+	
+	
 	public void ejecutar() throws ClassNotFoundException {
 		crear();
+		modulo_ventas();
 		botones();
 	}
 	
