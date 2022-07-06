@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libreria/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libreria/gson-2.8.5.jar"/>
 	<classpathentry kind="lib" path="libreria/itextpdf-5.4.0.jar"/>
+	<classpathentry kind="lib" path="libreria/mysql-connector-java-8.0.29/mysql-connector-java-8.0.29.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

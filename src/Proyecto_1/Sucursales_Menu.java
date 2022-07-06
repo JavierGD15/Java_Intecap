@@ -246,35 +246,10 @@ public class Sucursales_Menu implements Serializable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				sucursal s = new sucursal(Integer.parseInt(t1.getText()), t2.getText(), t3.getText(), t4.getText(),
-						Integer.parseInt(t5.getText()));
-
-				for (int i = 0; i < sucursales.length; i++) {
-					if (sucursales[i][0] == null) {
-
-						sucursales[i][0] = s.codigo;
-						sucursales[i][1] = s.nombre;
-						sucursales[i][2] = s.direccion;
-						sucursales[i][3] = s.correo;
-						sucursales[i][4] = s.telefono;
-
-						// guardar
-						try {
-							ObjectOutputStream carga = new ObjectOutputStream(
-									new FileOutputStream("tabla_sucursales.dat"));
-							carga.writeObject(sucursales);
-							carga.close();
-						} catch (IOException j) {
-
-						}
-
-						crear.setVisible(false);
-
-						break;
-
-					}
-				}
-
+				
+				sucursales_funciones sf = new sucursales_funciones();
+				sf.crear(t2.getText(), t3.getText(), t4.getText(), Integer.parseInt(t5.getText()));				
+				
 			}
 		};
 
@@ -339,43 +314,14 @@ public class Sucursales_Menu implements Serializable {
 		JsonParser parse = new JsonParser();
 		JsonArray matriz = parse.parse(archivo_retorno).getAsJsonArray();
 
-		for (int i = 0; i < 50; i++) {
-			if (sucursales[i][0] == null) {
-				y = i;
-				break;
-			}
-		}
-
-		x = y;
-
+		
 		for (int i = 0; i < matriz.size(); i++) {
-
-			if (sucursales[49][0] == null) {
-				JsonObject objeto = matriz.get(i).getAsJsonObject();
-				sucursal p = new sucursal(objeto.get("codigo").getAsInt(), objeto.get("nombre").getAsString(),
-						objeto.get("direccion").getAsString(), objeto.get("correo").getAsString(),
-						objeto.get("telefono").getAsInt());
-
-				sucursales[x][0] = p.codigo;
-				sucursales[x][1] = p.nombre;
-				sucursales[x][2] = p.direccion;
-				sucursales[x][3] = p.correo;
-				sucursales[x][4] = p.telefono;
-
-				x++;
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Tu documento excede tu maximo permitido,por favor modificalo.");
-				break;
-
-			}
+			JsonObject objeto = matriz.get(i).getAsJsonObject();
+			sucursales_funciones sf = new sucursales_funciones();
+			sf.crear(objeto.get("nombre").getAsString(), objeto.get("direccion").getAsString(), objeto.get("correo").getAsString(), objeto.get("telefono").getAsInt());
+			
 		}
-		try {
-			ObjectOutputStream tabla = new ObjectOutputStream(new FileOutputStream("tabla_sucursales.dat"));
-			tabla.writeObject(sucursales);
-			tabla.close();
-		} catch (IOException s) {
-		}
+		
 	}
 
 	private void eliminar() {
@@ -509,25 +455,18 @@ public class Sucursales_Menu implements Serializable {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					sucursal objeto = new sucursal(Integer.parseInt(t1.getText()), t2.getText(), t3.getText(),
-							t4.getText(), Integer.parseInt(t5.getText()));
-
-					sucursales[seleccionar][0] = objeto.codigo;
-					sucursales[seleccionar][1] = objeto.nombre;
-					sucursales[seleccionar][2] = objeto.direccion;
-					sucursales[seleccionar][3] = objeto.correo;
-					sucursales[seleccionar][4] = objeto.telefono;
-
-					// guardar
-					try {
-						ObjectOutputStream carga = new ObjectOutputStream(new FileOutputStream("tabla_sucursales.dat"));
-						carga.writeObject(sucursales);
-						carga.close();
-					} catch (IOException j) {
-
-					}
-
-					crear.setVisible(false);
+					sucursal objeto = new sucursal();
+					objeto.setCodigo(Integer.parseInt(t1.getText()));
+					objeto.setNombre(t2.getText());
+					objeto.setDireccion(t3.getText());
+					objeto.setTelefono(Integer.parseInt(t5.getText()));
+					objeto.setCorreo(t4.getText());
+					
+					sucursales_funciones sf = new sucursales_funciones();
+					sf.modificar(objeto);
+					
+					
+					
 				}
 			};
 
