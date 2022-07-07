@@ -78,6 +78,10 @@ public class Menu_Principal {
 		sucursales.add(sm.sp);
 		
 	}
+	public void cerrar () {
+		principal.setVisible(false);
+		
+	}
 	
 	public void ejecutar() throws ClassNotFoundException {
 		valores_iniciales();

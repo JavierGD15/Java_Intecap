@@ -38,7 +38,7 @@ public class Sucursales_Menu implements Serializable {
 	JButton pdf = new JButton();
 
 	// Matriz
-	Object[][] sucursales = new Object[50][5];
+	Object[][] sucursales;
 
 	// tabla y complemento
 	JTable tabla;
@@ -108,7 +108,12 @@ public class Sucursales_Menu implements Serializable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				eliminar();
+				try {
+					eliminar();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		};
@@ -143,12 +148,16 @@ public class Sucursales_Menu implements Serializable {
 	private void tabla() throws ClassNotFoundException {
 		String[] datos = { "Codigo", "Nombre", "Direccion", "Correo", "Telefono" };
 		
-		sucursales_funciones sf = new sucursales_funciones();		
-		tabla = new JTable(sf.listar(),datos);		
+		sucursales_funciones sf = new sucursales_funciones();	
+		sucursales = sf.listar();
+		tabla = new JTable(sucursales,datos);		
 		sp = new JScrollPane(tabla);
 		sp.setBounds(10, 10, 500, 600);
+		
+		
 
 	}
+	
 
 	private void crear() {
 
@@ -237,14 +246,14 @@ public class Sucursales_Menu implements Serializable {
 				
 				sucursales_funciones sf = new sucursales_funciones();
 				sf.crear(t2.getText(), t3.getText(), t4.getText(), Integer.parseInt(t5.getText()));				
-				
+				crear.setVisible(false);
 			}
 		};
 
 		// Acción del evento
 		b1.addActionListener(ingresar);
 		
-		crear.setVisible(false);
+		
 
 	}
 
@@ -315,42 +324,20 @@ public class Sucursales_Menu implements Serializable {
 		
 	}
 
-	private void eliminar() {
+	private void eliminar() throws ClassNotFoundException {
 		int posicion = tabla.getSelectedRow();
 
 		if (posicion != -1) {
 
-			for (int i = posicion; i < sucursales.length; i++) {
-
-				if (i == 49) {
-					sucursales[i][0] = null;
-					sucursales[i][1] = null;
-					sucursales[i][2] = null;
-					sucursales[i][3] = null;
-					sucursales[i][4] = null;
-				}
-
-				else if (sucursales[i][0] != null) {
-					sucursales[i][0] = sucursales[i + 1][0];
-					sucursales[i][1] = sucursales[i + 1][1];
-					sucursales[i][2] = sucursales[i + 1][2];
-					sucursales[i][3] = sucursales[i + 1][3];
-					sucursales[i][4] = sucursales[i + 1][4];
-				}
-			}
-
-			try {
-				ObjectOutputStream tabla = new ObjectOutputStream(new FileOutputStream("tabla_sucursales.dat"));
-				tabla.writeObject(sucursales);
-				tabla.close();
-			} catch (IOException s) {
-			}
+			sucursales_funciones sf = new sucursales_funciones();
+			sf.eliminar(Integer.parseInt(sucursales[posicion][0].toString()));
+			
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Debe selecionar una Fila");
 		}
-
-		tabla.clearSelection();
+		tabla.repaint();
+		sp.repaint();
 
 	}
 

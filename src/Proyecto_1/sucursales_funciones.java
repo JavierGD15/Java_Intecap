@@ -84,29 +84,24 @@ public class sucursales_funciones {
             	filas++;
             	
             }
-            System.out.println(filas);
+            
             listar = new Object[filas][5];
             int y =0;
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while (rs.next()) {
-            	
+            
+            while (rs.next()) {            	
             	listar[y][0] = rs.getInt(1);
             	listar[y][1] = rs.getString(2);
             	listar[y][2] = rs.getString(3);
             	listar[y][3] = rs.getString(4);
             	listar[y][4] = rs.getInt(5);
-            	y++;
-            	
+            	y++;            	
             }
         } catch (Exception e) {        	
             System.out.println(e);
         }
-    	
-        for (int i = 0; i < listar.length; i++) {
-			System.out.println(listar[i][0]);
-		}
     	
     	return listar;
     }
