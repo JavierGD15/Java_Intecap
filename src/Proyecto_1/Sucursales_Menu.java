@@ -142,21 +142,9 @@ public class Sucursales_Menu implements Serializable {
 
 	private void tabla() throws ClassNotFoundException {
 		String[] datos = { "Codigo", "Nombre", "Direccion", "Correo", "Telefono" };
-
-		// cargar archivo
-		try {
-
-			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_sucursales.dat"));
-
-			sucursales = (Object[][]) recuperar.readObject();
-			recuperar.close();
-
-		}
-
-		catch (IOException e) {
-		}
-
-		tabla = new JTable(sucursales, datos);
+		
+		sucursales_funciones sf = new sucursales_funciones();		
+		tabla = new JTable(sf.listar(),datos);		
 		sp = new JScrollPane(tabla);
 		sp.setBounds(10, 10, 500, 600);
 
@@ -255,6 +243,8 @@ public class Sucursales_Menu implements Serializable {
 
 		// Acción del evento
 		b1.addActionListener(ingresar);
+		
+		crear.setVisible(false);
 
 	}
 
@@ -306,8 +296,7 @@ public class Sucursales_Menu implements Serializable {
 	}
 
 	private void carga_masiva() throws FileNotFoundException, IOException, ParseException {
-		int x = 0;
-		int y = 0;
+		
 
 		String archivo_retorno = leerarchivo();
 
@@ -318,9 +307,11 @@ public class Sucursales_Menu implements Serializable {
 		for (int i = 0; i < matriz.size(); i++) {
 			JsonObject objeto = matriz.get(i).getAsJsonObject();
 			sucursales_funciones sf = new sucursales_funciones();
+			
 			sf.crear(objeto.get("nombre").getAsString(), objeto.get("direccion").getAsString(), objeto.get("correo").getAsString(), objeto.get("telefono").getAsInt());
 			
 		}
+		
 		
 	}
 
