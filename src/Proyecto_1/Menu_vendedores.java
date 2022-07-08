@@ -60,17 +60,12 @@ public class Menu_vendedores {
 	}
 
 	public void ejecutar() throws ClassNotFoundException {
-		extracted();
-	}
-
-	private void extracted() throws ClassNotFoundException {
 		menu();
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		Menu_vendedores mv = new Menu_vendedores();
 		mv.ejecutar();
-
 	}
 
 }

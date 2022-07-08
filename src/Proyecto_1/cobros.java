@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,13 +17,17 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import com.itextpdf.text.DocumentException;
+
 public class cobros {
 	JPanel filtro = new JPanel();
 	JPanel ventas = new JPanel();
 	String [] resultados = new String[100]; 
 	JComboBox combo_filtro = new JComboBox(resultados);
-	Object [][] clientes = new Object [100][5];
-	JTable tabla_compas;
+	Object [][] clientes;
+	
+	//tabla
+	JTable tabla_compras;
 	JScrollPane sp;
 	
 	//cajas filtro
@@ -30,6 +35,10 @@ public class cobros {
     JTextField t2 = new JTextField();
     JTextField t3 = new JTextField();
     JTextField t4 = new JTextField();
+    
+    //tabla
+    Object [][] agregar_productos = new Object [10][5];
+    int aumento = 0;
 	
 	private void crear() {
 		filtro.setLayout(null);
@@ -179,18 +188,7 @@ public class cobros {
 
 	private void crear_cliente() throws ClassNotFoundException {
 		
-		// cargar archivo
-		try {
-
-			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
-
-			clientes = (Object[][]) recuperar.readObject();
-			recuperar.close();
-
-		}
-
-		catch (IOException e) {
-		}
+		
 
 		JFrame crear = new JFrame();
 		JPanel p1 = new JPanel();
@@ -313,6 +311,8 @@ public class cobros {
 	private void aplicar_filtro() throws ClassNotFoundException {
 		
 		int x =0;
+		clientes_funciones sf = new clientes_funciones();
+		clientes = sf.listar();
 		
 		if(t1.getText().isEmpty() != false) {
 			if (t2.getText().isEmpty() != false) {
@@ -358,18 +358,8 @@ public class cobros {
 	
 	private void filtro_nombre(String nombre) throws ClassNotFoundException {
 		vaciar();
-		// cargar archivo
-		try {
+		
 
-			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
-
-			clientes = (Object[][]) recuperar.readObject();
-			recuperar.close();
-
-		}
-
-		catch (IOException e) {
-		}
 		boolean respuesta = false;
 		int contador =0;
 		for (int i = 0; i < clientes.length; i++) {
@@ -411,18 +401,8 @@ public class cobros {
 	
 	private void correo_filtro(String correo) throws ClassNotFoundException {
 		vaciar();
-		// cargar archivo
-		try {
+		
 
-			ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
-
-			clientes = (Object[][]) recuperar.readObject();
-			recuperar.close();
-
-		}
-
-		catch (IOException e) {
-		}
 		boolean respuesta = false;
 		int contador =0;
 		for (int i = 0; i < clientes.length; i++) {
@@ -460,18 +440,8 @@ public class cobros {
 	private void nit_filtro(int nit) throws ClassNotFoundException {
 		vaciar();
 		
-		// cargar archivo
-				try {
+		
 
-					ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
-
-					clientes = (Object[][]) recuperar.readObject();
-					recuperar.close();
-
-				}
-
-				catch (IOException e) {
-				}
 				boolean respuesta = false;
 				int contador =0;
 				for (int i = 0; i < clientes.length; i++) {
@@ -503,18 +473,7 @@ public class cobros {
 	
 	private void genero_filtro(String genero) throws ClassNotFoundException {
 		vaciar();
-		// cargar archivo
-				try {
-
-					ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("tabla_clientes.dat"));
-
-					clientes = (Object[][]) recuperar.readObject();
-					recuperar.close();
-
-				}
-
-				catch (IOException e) {
-				}
+		
 				boolean respuesta = false;
 				int contador =0;
 				for (int i = 0; i < clientes.length; i++) {
@@ -560,30 +519,80 @@ public class cobros {
 		ventas.add(l3_codigo);
 		
 		JLabel l4_cantidad = new JLabel("Cantidad");
-		JLabel l5_total = new JLabel("Total");
+		l4_cantidad.setBounds(400, 50, 50, 30);
+		ventas.add(l4_cantidad);
+		
+		
 		
 		JTextField t1_codigo = new JTextField();
 		t1_codigo.setBounds(180, 50, 180, 30);
 		ventas.add(t1_codigo);
 		
 		JTextField t2_cantidad = new JTextField();
+		t2_cantidad.setBounds(480, 50, 180, 30);
+		ventas.add(t2_cantidad);
 		
 		
 		JTextField t3_total = new JTextField();
 		
 		
 		
-		JButton agregar = new JButton();
+		JButton agregar = new JButton("Agregar");
+		agregar.setBounds(700, 50, 100, 30);
+		ventas.add(agregar);
+		
+		ActionListener funcion_comprar = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				funciones_productos fp = new funciones_productos();
+				productos x = new productos();
+				x = fp.buscar_producto(Integer.parseInt(t1_codigo.getText()), Integer.parseInt(t2_cantidad.getText()));
+				
+				if(x == null) {
+					JOptionPane.showMessageDialog(null, "Ingresa nuevamente");
+        			
+				}else {		
+				agregar_productos[aumento][0]= x.getCodigo();
+				agregar_productos[aumento][1] = x.getNombre();
+				agregar_productos[aumento][2]= Integer.parseInt(t2_cantidad.getText());
+				agregar_productos[aumento][3] = x.getPrecio();
+				agregar_productos[aumento][4] = (Integer.parseInt(t2_cantidad.getText())*x.getPrecio());
+				aumento++;
+				sp.setVisible(false);
+				tabla();
+				}
+
+			}
+		};
+
+		// Acción del evento
+		agregar.addActionListener(funcion_comprar);
+		
+		
+		
+		
+		//sin agregar aun 
+		JLabel l5_total = new JLabel("Total");
 		JButton vender = new JButton();
 		
-		tabla_compas = new JTable();
-		sp = new JScrollPane(tabla_compas);
+				
+		
 		
 		
 		
 		
 	}
 	
+	private void tabla() {
+		String[] datos = { "Codigo", "Nombre", "Cantidad", "Precio", "Subtotal" };
+		
+		tabla_compras = new JTable(agregar_productos,datos);		
+		sp = new JScrollPane(tabla_compras);
+		sp.setBounds(80, 120, 700, 100);
+		ventas.add(sp);
+	}
 	
 	
 	private void vaciar() {
@@ -593,13 +602,14 @@ public class cobros {
 	}
 	
 	
-	
-	
 	public void ejecutar() throws ClassNotFoundException {
 		crear();
 		modulo_ventas();
 		botones();
+		tabla();
 	}
+	
+
 	
 
 }

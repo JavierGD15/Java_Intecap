@@ -154,8 +154,6 @@ public class Sucursales_Menu implements Serializable {
 		sp = new JScrollPane(tabla);
 		sp.setBounds(10, 10, 500, 600);
 		
-		
-
 	}
 	
 
